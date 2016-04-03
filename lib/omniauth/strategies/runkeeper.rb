@@ -30,10 +30,14 @@ module OmniAuth
 
       def raw_info
         @raw_info ||= begin
-          user    = MultiJson.decode(access_token.get('/user').body)
-          profile = MultiJson.decode(access_token.get(user['profile']).body)
-          { 'userID' => user['userID'] }.merge(profile)
-        end
+                        user    = MultiJson.decode(access_token.get('/user').body)
+                        profile = MultiJson.decode(access_token.get(user['profile']).body)
+                        { 'userID' => user['userID'] }.merge(profile)
+                      end
+      end
+
+      def query_string
+        '' # The code param shouldn't be sent as part of the callback_url in the callback phase
       end
     end
   end
